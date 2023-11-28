@@ -22,7 +22,7 @@ class GenresViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: genreUrl) { (result: Result<MovieGenres, Error>) in
+        WebService.shared.fetchMediaData(from: genreUrl) { (result: Result<MovieGenres, Error>) in
             switch result {
             case.success(let movieGenre) :
                 self.presentResults(results: movieGenre.genres)
@@ -41,7 +41,7 @@ class GenresViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: urlMovieGenres) { (result: Result<MovieGenres, Error>) in
+        WebService.shared.fetchMediaData(from: urlMovieGenres) { (result: Result<MovieGenres, Error>) in
             switch result {
             case .success(let movieGenre):
                 self.presentTvResults(result: movieGenre.genres)

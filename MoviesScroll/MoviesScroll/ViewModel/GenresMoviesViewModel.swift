@@ -61,7 +61,7 @@ class GenresMoviesViewModel {
             fatalError("Invalid URL: \(urlString)")
         }
         
-        WebService().fetchMediaData(from: url) { [weak self] (result: Result<Movies, Error>) in
+        WebService.shared.fetchMediaData(from: url) { [weak self] (result: Result<Movies, Error>) in
             switch result {
             case .success(let movies):
                 self?.presentGenres(results: movies.results)

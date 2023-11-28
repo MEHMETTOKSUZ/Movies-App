@@ -18,7 +18,7 @@ class MovieDetailsViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: url) { (result: Result<MovieDetail, Error>) in
+        WebService.shared.fetchMediaData(from: url) { (result: Result<MovieDetail, Error>) in
             switch result {
             case .success(let movieDetails):
                 self.presentDetails(result: [movieDetails])

@@ -21,7 +21,7 @@ class CreditsViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: creditsUrl) { (result: Result<MovieCastingCredits, Error>) in
+        WebService.shared.fetchMediaData(from: creditsUrl) { (result: Result<MovieCastingCredits, Error>) in
             switch result {
             case .success(let castingCredits):
                 let directors = castingCredits.crew.filter { $0.job == "Director" }
@@ -53,7 +53,7 @@ class CreditsViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: castingUrl) { (result: Result<MovieCastingCredits, Error>) in
+        WebService.shared.fetchMediaData(from: castingUrl) { (result: Result<MovieCastingCredits, Error>) in
             switch result {
             case .success(let castingCredits):
                 let directors = castingCredits.crew.filter { $0.job == "Director" }

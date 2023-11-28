@@ -36,7 +36,7 @@ class MoviesViewModel {
             print("Invalid URL")
             return
         }
-        WebService().fetchMediaData(from: urlNowPlayingMovies) { (result: Result<Movies, Error>) in
+        WebService.shared.fetchMediaData(from: urlNowPlayingMovies) { (result: Result<Movies, Error>) in
             switch result {
                 
             case .success(let movies):
@@ -90,7 +90,7 @@ class MoviesViewModel {
             print("Invalid URL")
             return
         }
-        WebService().fetchMediaData(from: urlUpcomingMovies) { (result: Result<Movies, Error>) in
+        WebService.shared.fetchMediaData(from: urlUpcomingMovies) { (result: Result<Movies, Error>) in
             switch result {
                 
             case .success(let upcomingMovies):

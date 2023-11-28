@@ -37,7 +37,7 @@ class TVShowsViewModel {
             print("Invalid URL")
             return
         }
-        WebService().fetchMediaData(from: urlTopRatedTVShow) { (result: Result<TVShows, Error>) in
+        WebService.shared.fetchMediaData(from: urlTopRatedTVShow) { (result: Result<TVShows, Error>) in
             switch result {
             case .success(let movies):
                 self.presentTopRated(results: movies.results)
@@ -54,7 +54,7 @@ class TVShowsViewModel {
             print("Invalid URL")
             return
         }
-        WebService().fetchMediaData(from: urlPopularTVShow) { (result: Result<TVShows, Error>) in
+        WebService.shared.fetchMediaData(from: urlPopularTVShow) { (result: Result<TVShows, Error>) in
             switch result {
             case .success(let movies):
                 self.presentPopular(results: movies.results)

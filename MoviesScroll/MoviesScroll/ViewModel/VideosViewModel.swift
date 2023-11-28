@@ -21,7 +21,7 @@ class VideosViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: urlVideo) { (result: Result<MovieVideoDetails?, Error>) in
+        WebService.shared.fetchMediaData(from: urlVideo) { (result: Result<MovieVideoDetails?, Error>) in
                switch result {
                case .success(let videoDetails):
                    if let results = videoDetails?.videos?.results {
@@ -45,7 +45,7 @@ class VideosViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: urlVideo) { (result: Result<TVShowVideoDetails?, Error> ) in
+        WebService.shared.fetchMediaData(from: urlVideo) { (result: Result<TVShowVideoDetails?, Error> ) in
             switch result {
             case .success(let videoDetails):
                 if let results = videoDetails?.videos?.results {

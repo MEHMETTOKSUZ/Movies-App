@@ -42,7 +42,7 @@ class CastViewModel {
             print("Invalid URL")
             return
         }
-        WebService().fetchMediaData(from: castActors) { (result: Result<Credits, Error>) in
+        WebService.shared.fetchMediaData(from: castActors) { (result: Result<Credits, Error>) in
             switch result {
             case .success(let actor):
                 self.presentResultTvShow(result: actor.cast)
@@ -59,7 +59,7 @@ class CastViewModel {
             return
         }
         
-        WebService().fetchMediaData(from: castActors) { (result: Result<Credits, Error>) in
+        WebService.shared.fetchMediaData(from: castActors) { (result: Result<Credits, Error>) in
             switch result {
             case .success(let actor):
                 self.presentCast(result: actor.cast)

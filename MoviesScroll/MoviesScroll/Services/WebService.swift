@@ -10,6 +10,10 @@ import Foundation
 
 class WebService {
     
+    static let shared = WebService()
+    
+    private init() {}
+    
     func fetchMediaData<T: Codable>(from url: URL, completion: @escaping (Result<T, Error>) -> Void) {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else {
