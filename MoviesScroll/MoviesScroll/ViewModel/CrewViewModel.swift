@@ -21,25 +21,26 @@ class CreditsViewModel {
             return
         }
         
-        WebService().fetchCreditsData(from: creditsUrl) { result in
+        WebService().fetchMediaData(from: creditsUrl) { (result: Result<MovieCastingCredits, Error>) in
             switch result {
-            case .success(let crew):
-                let directors = crew.filter { $0.job == "Director" }
-                let writers = crew.filter { $0.job == "Screenplay" }
-                let producers = crew.filter { $0.job == "Producer" }
+            case .success(let castingCredits):
+                let directors = castingCredits.crew.filter { $0.job == "Director" }
+                let writers = castingCredits.crew.filter { $0.job == "Screenplay" }
+                let producers = castingCredits.crew.filter { $0.job == "Producer" }
                 
-                let directorsText = "Directors: \n" + directors.map { $0.name }.joined(separator: "\n")
-                let writersText = "Writers: \n" + writers.map { $0.name }.joined(separator: "\n")
-                let producersText = "Producers: \n" + producers.map { $0.name }.joined(separator: "\n")
-                
-                let crewsViewModel = MoviesTableViewDetails.CrewsViewModel(
-                    directors: directorsText,
-                    writers: writersText,
-                    productor: producersText
-                )
-                self.crews = crewsViewModel
-                self.didFinishLoad?()
-                
+                DispatchQueue.main.async {
+                    let directorsText = "Directors:\n" + directors.map { $0.name }.joined(separator: "\n")
+                    let writersText = "Writers:\n" + writers.map { $0.name }.joined(separator: "\n")
+                    let producersText = "Producers:\n" + producers.map { $0.name }.joined(separator: "\n")
+                    
+                    let crewsViewModel = MoviesTableViewDetails.CrewsViewModel(
+                        directors: directorsText,
+                        writers: writersText,
+                        productor: producersText
+                    )
+                    self.crews = crewsViewModel
+                    self.didFinishLoad?()
+                }
             case .failure(let error):
                 self.didFinishWithError?(error.localizedDescription)
             }
@@ -47,17 +48,18 @@ class CreditsViewModel {
     }
     
     func fetchTvCrew(movieId: String) {
-        
         guard let castingUrl = URL(string: "https://api.themoviedb.org/3/tv/\(Int(movieId)!)/credits?api_key=\(LocaleKey.API_KEY)&language=en-US") else {
             print("Invalid URL")
             return
         }
-        WebService().fetchCreditsData(from: castingUrl) { result in
+        
+        WebService().fetchMediaData(from: castingUrl) { (result: Result<MovieCastingCredits, Error>) in
             switch result {
-            case .success(let crew):
-                let directors = crew.filter { $0.job == "Director" }
-                let writers = crew.filter { $0.job == "Screenplay" }
-                let producers = crew.filter { $0.job == "Producer" }
+            case .success(let castingCredits):
+                let directors = castingCredits.crew.filter { $0.job == "Director" }
+                let writers = castingCredits.crew.filter { $0.job == "Screenplay" }
+                let producers = castingCredits.crew.filter { $0.job == "Producer" }
+                
                 DispatchQueue.main.async {
                     let directorsText = "Directors:\n" + directors.map { $0.name }.joined(separator: "\n")
                     let writersText = "Writers:\n" + writers.map { $0.name }.joined(separator: "\n")
@@ -70,14 +72,13 @@ class CreditsViewModel {
                     )
                     self.tvShowCrew = crewsViewModel
                     self.didFinishLoad?()
-                    
                 }
             case .failure(let error):
                 self.didFinishWithError?(error.localizedDescription)
             }
         }
     }
-    
+
     func configureCrews() -> MoviesTableViewDetails.CrewsViewModel? {
         return crews
     }
